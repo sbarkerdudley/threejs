@@ -24,7 +24,7 @@ const cam = {
 };
 
 var PARAMS = {
-  qty: 30_000,
+  qty: 20_000,
   size: 0.25,
   texture: 3,
 };
@@ -189,6 +189,8 @@ const clock = new THREE.Clock();
 const animate = () => {
   const elapsedTime = clock.getElapsedTime() / 4;
 
+  const wave = Math.sin(elapsedTime);
+
   // Update controls
   controls.update();
 
@@ -200,11 +202,11 @@ const animate = () => {
   //   camera.position.z += 0.03;
 
   for (var i = 0; i < PARAMS.qty; i++) {
-    geometry.attributes.position.array[i * 3 + 1] = Math.sin(elapsedTime);
-}
-particles.rotation.z = Math.sin(elapsedTime) / 4;
-particles.rotation.y = Math.sin(elapsedTime) / 6;
-particles.rotation.x = - Math.sin(elapsedTime)
+    geometry.attributes.position.array[i * 3 + 1] = wave
+  }
+  particles.rotation.z = wave / 4;
+  particles.rotation.y = wave / 6;
+  particles.rotation.x = wave;
 
   // Render
   renderer.render(scene, camera);
