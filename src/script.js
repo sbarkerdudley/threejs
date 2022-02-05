@@ -32,11 +32,12 @@ const geom = [
 // }
 
 
-const geometry = new THREE.SphereBufferGeometry(...geom)
+const geometry = new THREE.BufferGeometry()
+geometry.setAttribute('position', new THREE.BufferAttribute(vertices(40000), 3))
 
 const particlesMaterial = new THREE.PointsMaterial();
 
-particlesMaterial.size = 0.005;
+particlesMaterial.size = 0.05;
 particlesMaterial.sizeAttenuation = true;
 particlesMaterial.color = new THREE.Color(0xCF9060);
 
@@ -124,6 +125,8 @@ const animate = () => {
 animate();
 
 
-function vertices() {
-  return Array(500).fill().map(() => {})
+function vertices(count = 300) {
+  const tripled = count * 3 /* represents x, y, z coordinates */
+
+  return new Float32Array(count).fill().map((element, i) => (Math.random() - 0.2) * 10)
 }
