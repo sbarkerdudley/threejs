@@ -19,27 +19,32 @@ const scene = new THREE.Scene();
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
+const particleTexture = textureLoader.load('/textures/particles/13.png');
 
-const geom = [
-    1,
-    80,
-    80,
-]
-// const geom = {
-//     radius: 50,
-//     widthSegments: 10,
-//     heightSegments: 10,
-// }
+function vertices(count = 300) {
+  /**
+   * @param {number} count count * 3 => represents x, y, z coordinates
+   */
+  return new Float32Array(count * 3)
+    .fill()
+    .map((element, i) => (Math.random() - 0.5) * 10);
+}
 
-
-const geometry = new THREE.BufferGeometry()
-geometry.setAttribute('position', new THREE.BufferAttribute(vertices(40000), 3))
+const geometry = new THREE.BufferGeometry();
+geometry.setAttribute(
+  'position',
+  new THREE.BufferAttribute(vertices(20_000), 3),
+);
 
 const particlesMaterial = new THREE.PointsMaterial();
 
-particlesMaterial.size = 0.05;
+particlesMaterial.size = 0.1;
 particlesMaterial.sizeAttenuation = true;
-particlesMaterial.color = new THREE.Color(0xCF9060);
+particlesMaterial.color = new THREE.Color(0xFF4040);
+// particlesMaterial.map = particleTexture; // opaque texture loader
+
+particlesMaterial.alphaMap = particleTexture;
+particlesMaterial.transparent = !!1;
 
 /**
  * Test cube
@@ -72,7 +77,7 @@ window.addEventListener('resize', () => {
 const cam = {
   fov: 75,
   ratio: sizes.w / sizes.h,
-  near: .1,
+  near: 0.1,
   far: 100,
   z: 3,
 };
@@ -81,10 +86,10 @@ const cam = {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(
-    cam.fov,
-    cam.ratio,
-    cam.near,
-    cam.far
+  cam.fov,
+  cam.ratio,
+  cam.near,
+  cam.far,
 );
 camera.position.z = cam.z;
 scene.add(camera);
@@ -97,7 +102,7 @@ controls.enableDamping = true;
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
-  canvas: $canvas
+  canvas: $canvas,
 });
 
 renderer.setSize(sizes.w, sizes.h);
@@ -123,10 +128,3 @@ const animate = () => {
 };
 
 animate();
-
-
-function vertices(count = 300) {
-  const tripled = count * 3 /* represents x, y, z coordinates */
-
-  return new Float32Array(count).fill().map((element, i) => (Math.random() - 0.2) * 10)
-}
