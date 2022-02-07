@@ -5,12 +5,7 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import * as dat from 'lil-gui';
 import { canvas, scene } from './scene';
-import { cube } from './geometry';
 
-/**
- * Base
- */
-// Debug
 const gui = new dat.GUI();
 
 const SIZES = {
@@ -42,15 +37,14 @@ const FONT = {
   },
 };
 
-const axesHelper = new THREE.AxesHelper()
-
+const axesHelper = new THREE.AxesHelper();
 
 const textureLoader = new THREE.TextureLoader();
 
 const fontLoader = new FontLoader();
 
 fontLoader.load('/fonts/helvetiker_bold.typeface.json', (font) => {
-  const textGeometry = new TextGeometry('Sam', {
+  const textGeometry = new TextGeometry('SAM', {
     font,
     size: FONT.size,
     height: FONT.height,
@@ -62,30 +56,30 @@ fontLoader.load('/fonts/helvetiker_bold.typeface.json', (font) => {
     bevelSegments: FONT.bevel.Segments,
   });
 
-  textGeometry.groups.shift()
-  textGeometry.groups.shift()
+  textGeometry.groups.shift();
+  textGeometry.groups.shift();
   textGeometry.parameters.shapes.pop();
 
-  textGeometry.computeBoundingBox()
+  textGeometry.computeBoundingBox();
   textGeometry.translate(
-    - (textGeometry.boundingBox.max.x - FONT.bevel.Size) * 0.5,
-    - (textGeometry.boundingBox.max.y - FONT.bevel.Size) * 0.5,
-    - (textGeometry.boundingBox.max.z - FONT.bevel.Size) * 0.5,
-
+    -(textGeometry.boundingBox.max.x - FONT.bevel.Size) * 0.5,
+    -(textGeometry.boundingBox.max.y - FONT.bevel.Size) * 0.5,
+    -(textGeometry.boundingBox.max.z - FONT.bevel.Size) * 0.5,
   );
 
   console.dir(textGeometry);
 
   const textMaterial = new THREE.MeshNormalMaterial({
     wireframe: true,
-  })
-  const text = new THREE.Mesh(textGeometry, textMaterial)
+  });
+  const text = new THREE.Mesh(textGeometry, textMaterial);
 
   scene.add(text, axesHelper);
 });
 
-
-
+/**
+ * https://github.com/nidorx/matcaps
+ */
 
 window.addEventListener('resize', () => {
   SIZES.width = window.innerWidth;
@@ -115,8 +109,6 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.x = CAMERA.position.x;
 camera.position.y = CAMERA.position.y;
 camera.position.z = CAMERA.position.z;
-
-// scene.add(cube);
 
 scene.add(camera);
 
