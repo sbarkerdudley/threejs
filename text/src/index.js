@@ -62,9 +62,9 @@ fontLoader.load('/fonts/helvetiker_bold.typeface.json', (font) => {
 
   textGeometry.computeBoundingBox();
   textGeometry.translate(
-    -(textGeometry.boundingBox.max.x - FONT.bevel.Size) * 0.5,
-    -(textGeometry.boundingBox.max.y - FONT.bevel.Size) * 0.5,
-    -(textGeometry.boundingBox.max.z - FONT.bevel.Size) * 0.5,
+    -1 * (textGeometry.boundingBox.max.x - FONT.bevel.Size) * 0.5,
+    -1 * (textGeometry.boundingBox.max.y - FONT.bevel.Size) * 0.5,
+    -1 * (textGeometry.boundingBox.max.z - FONT.bevel.Size) * 0.5,
   );
 
   console.dir(textGeometry);
